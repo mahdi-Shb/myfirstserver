@@ -4,6 +4,7 @@ from threading import Thread
 
 app = Flask(__name__)
 
+thread = None
 win_number = 0
 has_won = False
 
@@ -74,13 +75,16 @@ def decrease_number(rate):
 
 @app.route("/make_it_easy", methods=["POST"])
 def make_it_easy():
+    global thread
     data = request.get_json()
 
     if not data or "rate" not in data:
         return jsonify({"error": "Missing 'rate' field"}), 400
 
     rate = data["rate"]
-    
+    if thread is not None:
+        thread.join(timeout=1)
+
     thread = Thread(target=decrease_number, args=(rate,))
     thread.daemon = True
     thread.start()
