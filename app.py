@@ -35,6 +35,7 @@ def save_default_number():
         return jsonify({"error": "Missing 'number' field"}), 400
 
     default_stored_number = data["number"]
+    stored_number = default_stored_number
     return 'ok', 200
 
 
