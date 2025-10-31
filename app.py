@@ -28,7 +28,7 @@ def save_number():
 
 @app.route("/save_default_number", methods=["POST"])
 def save_default_number():
-    global default_stored_number
+    global default_stored_number, stored_number
     data = request.get_json()
 
     if not data or "number" not in data:
